@@ -1,0 +1,5 @@
+alter table public.menu_items add column if not exists name_so text not null default '', add column if not exists description_so text not null default '';
+
+insert into public.site_settings (key, value) values ('general', '{"site_name":"Dilek Restaurant","tagline_en":"Refined cuisine, handcrafted cakes and artisan drinks.","tagline_so":"Cunto qurux badan, keeg gacmeed iyo cabitaan farshaxan ah."}'::jsonb), ('order_message', '{"en":"Hello, I would like to order one {name}. Price: {price}. Is it available?"}'::jsonb) on conflict (key) do nothing;
+
+update public.site_settings set value = value || '{"hero_title_so":"Saxan kasta waa dahab","welcome_so":"Ku soo dhowoow miiskeenna","description_so":"Cunto farshaxan ah, keeg gacmeed iyo cabitaan xirfad leh, oo lagu soo bandhigo diiri."}'::jsonb, updated_at = now() where key = 'home';
